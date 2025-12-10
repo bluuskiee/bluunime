@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluuni.me - Nonton Anime Sub Indo Tercepat & Terupdate</title>
+    <meta name="description" content="Nonton streaming anime subtitle Indonesia terlengkap 2024-2025. Samehadaku, Otakudesu, Anoboy, Anime-Indo dalam 1 situs. Tanpa iklan popup!">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://i.ibb.co.com/0jQ7Z7K/bluuni.png" type="image/png">
+    <style>
+        :root {
+            --primary: #00d4ff;
+            --dark: #0f0f1a;
+            --darker: #0a0a12;
+            --gray: #1a1a2e;
+        }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--dark);
+            color: #fff;
+            background-image: linear-gradient(rgba(10,10,18,0.95), rgba(10,10,18,0.98)), url('https://i.ibb.co.com/0jQ7Z7K/bg.jpg');
+            background-attachment: fixed;
+        }
+        header {
+            background: rgba(10,10,18,0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(0,212,255,0.3);
+        }
+        .container { width: 95%; max-width: 1300px; margin: 0 auto; }
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        .logo span { color: #fff; }
+        .search-box {
+            margin: 100px auto 40px;
+            max-width: 700px;
+            position: relative;
+        }
+        #searchInput {
+            width: 100%;
+            padding: 18px 60px 18px 20px;
+            border: none;
+            border-radius: 50px;
+            background: var(--gray);
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+        #searchInput::placeholder { color: #888; }
+        .search-btn {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            background: var(--primary);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            color: #000;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .anime-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .anime-card {
+            background: var(--gray);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        .anime-card:hover { transform: translateY(-10px); box-shadow: 0 20px 30px rgba(0,212,255,0.2); }
+        .anime-card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .anime-title {
+            padding: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .episode-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: #000;
+            padding: 4px 8px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        .source-tag {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0,0,0,0.7);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+        }
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+            font-size: 14px;
+        }
+        .loading {
+            text-align: center;
+            padding: 50px;
+            font-size: 18px;
+        }
+        @media (max-width: 768px) {
+            .anime-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container" style="display:flex; justify-content:space-between; align-items:center;">
+            <a href="/" class="logo">Bluuni<span>.me</span></a>
+            <div style="font-size:14px; color:#00d4ff;">Update Setiap Hari • Tanpa Iklan Popup</div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="Cari anime... contoh: One Piece, Kimetsu no Yaiba, Solo Leveling Season 2...">
+            <button class="search-btn"><i class="fas fa-search"></i></button>
+        </div>
+
+        <h2 style="margin: 20px 20px 10px; font-size:22px;">Anime Terbaru Sub Indo</h2>
+        <div id="animeList" class="anime-grid">
+            <div class="loading">Memuat anime terbaru dari 4 sumber terbaik...</div>
+        </div>
+    </div>
+
+    <footer>
+        Bluuni.me © 2025 • Nonton Anime Sub Indo Legal & Gratis<br>
+        Sumber: Otakudesu | Samehadaku | Anoboy | Anime-Indo
+    </footer>
+
+    <script>
+        const animeList = document.getElementById('animeList');
+        
+        // Semua sumber dalam 1 array (bisa ditambah lagi nanti)
+        const sources = [
+            // Otakudesu
+            { name: "Otakudesu", url: "https://otakudesu.cloud", selector: ".venz ul li .detpost", img: ".thumb img", title: ".thumbz h2 a", link: ".thumbz h2 a", episode: ".epz" },
+            // Samehadaku
+            { name: "Samehadaku", url: "https://samehadaku.email", selector: ".post-show ul li", img: "img", title: "h2 a", link: "h2 a", episode: ".epz" },
+            // Anoboy
+            { name: "Anoboy", url: "https://anoboy.today", selector: ".homepost", img: "img", title: ".ttls a", link: ".homecon a", episode: ".eps" },
+            // Anime-Indo
+            { name: "AnimeIndo", url: "https://anime-indo.co", selector: ".animepost", img: "img", title: ".title", link: ".animposx a", episode: ".type" }
+        ];
+
+        async function loadAnime() {
+            animeList.innerHTML = '<div class="loading"><i class="fas fa-spinner fa-spin"></i> Mengambil data dari 4 sumber...</div>';
+            let allAnime = [];
+
+            for (let source of sources) {
+                try {
+                    const proxy = "https://api.allorigins.win/raw?url="; // bypass CORS
+                    const res = await fetch(proxy + encodeURIComponent(source.url));
+                    const html = await res.text();
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, "text/html");
+                    const items = doc.querySelectorAll(source.selector);
+
+                    items.forEach(item => {
+                        const img = item.querySelector(source.img)?.src || '';
+                        const title = item.querySelector(source.title)?.textContent.trim() || 'No Title';
+                        const link = item.querySelector(source.link || source.title)?.href || '#';
+                        const episode = item.querySelector(source.episode)?.textContent.trim() || '';
+
+                        if (title && link && img) {
+                            allAnime.push({
+                                title: title.length > 40 ? title.substr(0,40)+'...' : title,
+                                fulltitle: title,
+                                img: img.startsWith('http') ? img : source.url + img,
+                                link: link,
+                                episode: episode,
+                                source: source.name
+                            });
+                        }
+                    });
+                } catch (e) {
+                    console.log("Gagal load dari " + source.name);
+                }
+            }
+
+            // Urutkan berdasarkan episode terbaru (kasar tapi efektif)
+            allAnime.sort((a,b) => b.episode.localeCompare(a.episode));
+
+            // Tampilkan hanya 60 teratas biar tidak lemot
+            displayAnime(allAnime.slice(0, 80));
+        }
+
+        function displayAnime(animes) {
+            if (animes.length === 0) {
+                animeList.innerHTML = '<div class="loading">Tidak ada hasil ditemukan :(</div>';
+                return;
+            }
+
+            animeList.innerHTML = animes.map(anime => `
+                <div class="anime-card" onclick="openPlayer('${anime.link}')">
+                    <div class="source-tag">${anime.source}</div>
+                    ${anime.episode ? `<div class="episode-badge">${anime.episode}</div>` : ''}
+                    <img src="${anime.img}" alt="${anime.fulltitle}" loading="lazy">
+                    <div class="anime-title">${anime.fulltitle}</div>
+                </div>
+            `).join('');
+        }
+
+        function openPlayer(url) {
+            // Auto detect dan langsung ke player terbaik
+            let playerUrl = url;
+            if (url.includes('otakudesu')) {
+                playerUrl = url.replace('/anime/', '/episode/').replace('/complete/', '/episode/');
+            }
+            window.open(playerUrl, '_blank');
+        }
+
+        // Search function
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            if (query.length < 2) {
+                loadAnime();
+                return;
+            }
+
+            fetch('https://api.allorigins.win/raw?url=' + encodeURIComponent('https://otakudesu.cloud/?s=' + query))
+                .then(r => r.text())
+                .then(html => {
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, "text/html");
+                    const results = doc.querySelectorAll('.venser .page ul li');
+                    let searchResults = [];
+
+                    results.forEach(r => {
+                        const link = r.querySelector('h2 a');
+                        const img = r.querySelector('img');
+                        if (link && img) {
+                            searchResults.push({
+                                title: link.textContent,
+                                fulltitle: link.textContent,
+                                link: link.href,
+                                img: img.src,
+                                source: "Otakudesu"
+                            });
+                        }
+                    });
+
+                    displayAnime(searchResults.length > 0 ? searchResults : [{title: "Tidak ditemukan", img: "", link: "#"}]);
+                });
+        });
+
+        // Load saat buka website
+        loadAnime();
+        setInterval(loadAnime, 600000); // refresh tiap 10 menit
+    </script>
+</body>
+</html>
